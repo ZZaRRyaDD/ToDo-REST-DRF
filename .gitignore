@@ -2,5 +2,5 @@
 *__pycache__*
 /.vs
 /.vscode
-.env
-.sqlite3
+*.env
+*.sqlite3
