@@ -1,32 +1,25 @@
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics, permissions
 from . import serializers, models
 from django.db.models import Q
 
 
 class TaskCreateView(generics.CreateAPIView):
-    serializer_class = serializers.TaskCreateSerializer
-    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.TaskDetailSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 
-class TaskUpdateView(generics.UpdateAPIView):
-    serializer_class = serializers.TaskCreateSerializer
-    queryset = models.Task.objects.all()
-    permission_classes = (IsAuthenticated, )
-
-
-class TaskRetrieveDestroyView(generics.RetrieveDestroyAPIView):
+class TaskRetrieveDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TaskDetailSerializer
     queryset = models.Task.objects.all()
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, )
 
 
 class UserTasksView(generics.ListAPIView):
-    serializer_class = serializers.TaskCreateSerializer
-    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.TaskDetailSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         user = self.kwargs['pk']
@@ -34,7 +27,7 @@ class UserTasksView(generics.ListAPIView):
 
 
 class SearchListView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, )
     serializer_class = serializers.TaskDetailSerializer
 
     def get_queryset(self):

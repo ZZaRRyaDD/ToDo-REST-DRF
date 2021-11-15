@@ -13,14 +13,16 @@ class UserActivationView(views.APIView):
         post_data = {'uid': uid, 'token': token}
         result = requests.post(post_url, data=post_data)
         content = result.text
-        return Response("Аккаунт подтвержден" if content == "" else content)
+        return Response({"message": "Аккаунт подтвержден" if content == "" else content},
+                        status=status.HTTP_201_CREATED)
 
 
 class PasswordResetView(generics.GenericAPIView):
     serializer_class = serializers.ResetPasswordSerializer
 
     def get(self, request, uid, token):
-        return Response("Введите новый пароль дважды.")
+        return Response({"message": "Введите новый пароль дважды."},
+                        status=status.HTTP_204_NO_CONTENT)
 
     def post(self, request, uid, token):
         protocol = 'https://' if request.is_secure() else 'http://'
@@ -30,7 +32,8 @@ class PasswordResetView(generics.GenericAPIView):
                      'new_password': request.POST['new_password'], 're_new_password': request.POST['re_new_password']}
         result = requests.post(post_url, data=post_data)
         content = result.text
-        return Response("Пароль сменен" if content == "" else content)
+        return Response({"message": "Пароль сменен" if content == "" else content},
+                        status=status.HTTP_205_RESET_CONTENT)
 
 
 class LogoutAPIView(generics.GenericAPIView):
@@ -42,4 +45,5 @@ class LogoutAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Пользователь вышел"},
+                        status=status.HTTP_204_NO_CONTENT)
