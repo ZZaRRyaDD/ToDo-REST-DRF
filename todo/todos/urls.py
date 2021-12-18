@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from rest_framework.schemas import get_schema_view
 
+from . import views
 
 urlpatterns = [
     path('create/', views.TaskCreateView.as_view(), name="create_task"),
