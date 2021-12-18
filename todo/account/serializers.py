@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
-from django.contrib.auth.models import User
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -8,11 +8,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = None
         if not User.objects.filter(email=validated_data["email"]):
-            user = User.objects.create_user(email=validated_data["email"],
-                                            username=validated_data['username'],
-                                            password=validated_data['password'],
-                                            first_name=validated_data['first_name'],
-                                            last_name=validated_data['last_name'])
+            user = User.objects.create_user(
+                email=validated_data["email"],
+                username=validated_data['username'],
+                password=validated_data['password'],
+                first_name=validated_data['first_name'],
+                last_name=validated_data['last_name']
+            )
             user.is_active = False
             user.save()
         return user

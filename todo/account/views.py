@@ -1,10 +1,16 @@
 import requests
 from rest_framework import generics, status, permissions, views
 from rest_framework.response import Response
+from todos.models import Task
+from todos.serializers import TaskDetailSerializer
+from wall.models import Post
+from wall.serializers import PostSerializer
+
 from . import serializers
 
 
 class UserActivationView(views.APIView):
+    permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, uid, token):
         protocol = 'https://' if request.is_secure() else 'http://'
@@ -18,6 +24,7 @@ class UserActivationView(views.APIView):
 
 
 class PasswordResetView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny, ]
     serializer_class = serializers.ResetPasswordSerializer
 
     def get(self, request, uid, token):
@@ -37,8 +44,8 @@ class PasswordResetView(generics.GenericAPIView):
 
 
 class LogoutAPIView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.LogoutSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -47,3 +54,19 @@ class LogoutAPIView(generics.GenericAPIView):
 
         return Response({"message": "Пользователь вышел"},
                         status=status.HTTP_204_NO_CONTENT)
+
+
+class PostsUserView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(user__id=self.kwargs['pk'])
+
+
+class TasksUserView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = TaskDetailSerializer
+
+    def get_queryset(self):
+        return Task.objects.filter(user__id=self.kwargs['pk'])

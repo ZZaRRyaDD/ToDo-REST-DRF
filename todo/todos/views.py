@@ -1,39 +1,37 @@
+from django.db.models import Q
 from rest_framework import generics, permissions
 from . import serializers, models
-from django.db.models import Q
 
 
 class TaskCreateView(generics.CreateAPIView):
-    serializer_class = serializers.TaskDetailSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = serializers.TaskCreateSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 
 class TaskRetrieveDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.TaskDetailSerializer
     queryset = models.Task.objects.all()
-    permission_classes = (permissions.IsAuthenticated, )
-
-
-class UserTasksView(generics.ListAPIView):
-    serializer_class = serializers.TaskDetailSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def get_queryset(self):
-        user = self.kwargs['pk']
-        return models.Task.objects.filter(user__id=user)
 
 
 class SearchListView(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.TaskDetailSerializer
 
     def get_queryset(self):
-        queryset = None
+        queryset = []
         keywords = self.request.GET.get('search')
         if keywords:
-            queryset = models.Task.objects.filter(Q(name__icontains=keywords)
-                                                  | Q(description__icontains=keywords))
-        return queryset
+            for keyword in keywords:
+                keyword_queryset = list(
+                    models.Task.objects.filter(Q(name__icontains=keyword) | Q(description__icontains=keyword) |
+                                               Q(name__icontains=keyword.lower()) | Q(
+                        description__icontains=keyword.lower()) |
+                                               Q(name__icontains=keyword.upper()) | Q(
+                        description__icontains=keyword.upper())))
+                if keyword_queryset is not None:
+                    queryset.extend(keyword_queryset)
+        return list(set(queryset))
