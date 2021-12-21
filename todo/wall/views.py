@@ -4,6 +4,7 @@ from . import models, serializers
 
 
 class PostCreateView(generics.CreateAPIView):
+    """Создание поста"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.CreatePostSerializer
 
@@ -12,24 +13,28 @@ class PostCreateView(generics.CreateAPIView):
 
 
 class AllListPostsView(generics.ListAPIView):
+    """Список всех постов"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.PostSerializer
     queryset = models.Post.objects.order_by('date_time')
 
 
 class ReadPostView(generics.RetrieveAPIView):
+    """Чтение поста"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.PostSerializer
     queryset = models.Post.objects.all()
 
 
 class DeletePostView(generics.DestroyAPIView):
+    """Удаление поста"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.CreatePostSerializer
     queryset = models.Post.objects.all()
 
 
 class CommentCreateView(generics.CreateAPIView):
+    """Создание комментария"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.CommentCreateSerializer
 
@@ -38,6 +43,7 @@ class CommentCreateView(generics.CreateAPIView):
 
 
 class CommentListView(generics.ListAPIView):
+    """Список комментариев"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.CommentSerializer
 
@@ -46,6 +52,7 @@ class CommentListView(generics.ListAPIView):
 
 
 class ReadDeleteUpdateCommentView(generics.RetrieveUpdateDestroyAPIView):
+    """Обновление / удаление/ чтение комментария"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.CommentSerializer
 

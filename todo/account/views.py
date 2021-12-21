@@ -10,6 +10,7 @@ from . import serializers
 
 
 class UserActivationView(views.APIView):
+    """Активация аккаунта"""
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, uid, token):
@@ -24,6 +25,7 @@ class UserActivationView(views.APIView):
 
 
 class PasswordResetView(generics.GenericAPIView):
+    """Сброс пароля"""
     permission_classes = [permissions.AllowAny, ]
     serializer_class = serializers.ResetPasswordSerializer
 
@@ -44,6 +46,7 @@ class PasswordResetView(generics.GenericAPIView):
 
 
 class LogoutAPIView(generics.GenericAPIView):
+    """Выход"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.LogoutSerializer
 
@@ -57,6 +60,7 @@ class LogoutAPIView(generics.GenericAPIView):
 
 
 class PostsUserView(generics.ListAPIView):
+    """Просмотр постов пользователя"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = PostSerializer
 
@@ -65,6 +69,7 @@ class PostsUserView(generics.ListAPIView):
 
 
 class TasksUserView(generics.ListAPIView):
+    """Просмотр задач пользователя"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = TaskDetailSerializer
 

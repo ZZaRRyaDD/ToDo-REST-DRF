@@ -1,9 +1,11 @@
 from django.db.models import Q
 from rest_framework import generics, permissions
+
 from . import serializers, models
 
 
 class TaskCreateView(generics.CreateAPIView):
+    """Создание задачи"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.TaskCreateSerializer
 
@@ -12,12 +14,14 @@ class TaskCreateView(generics.CreateAPIView):
 
 
 class TaskRetrieveDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    """Обновление / удаление / просмотр задачи"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.TaskDetailSerializer
     queryset = models.Task.objects.all()
 
 
 class SearchListView(generics.ListAPIView):
+    """Поиск задач по введенному запросу"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.TaskDetailSerializer
 

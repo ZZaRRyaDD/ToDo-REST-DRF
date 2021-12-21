@@ -5,7 +5,6 @@ from . import models
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Comment
         fields = ["text", ]

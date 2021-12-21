@@ -8,7 +8,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор", related_name="posts")
 
     def __str__(self):
-        return f"id: {self.id}, составитель: {self.user.username}, туду: {self.task.name}"
+        return f"id: {self.id}, составитель: {self.user.username}, задача: {self.task.name}"
 
 
 class Comment(models.Model):
