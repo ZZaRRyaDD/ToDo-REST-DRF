@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from . import permissions as perm
 
 from . import models, serializers
 
@@ -28,7 +29,7 @@ class ReadPostView(generics.RetrieveAPIView):
 
 class DeletePostView(generics.DestroyAPIView):
     """Удаление поста"""
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, perm.IsCreator]
     serializer_class = serializers.CreatePostSerializer
     queryset = models.Post.objects.all()
 
@@ -53,7 +54,7 @@ class CommentListView(generics.ListAPIView):
 
 class ReadDeleteUpdateCommentView(generics.RetrieveUpdateDestroyAPIView):
     """Обновление / удаление/ чтение комментария"""
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, perm.IsCreator]
     serializer_class = serializers.CommentSerializer
 
     def get_queryset(self):

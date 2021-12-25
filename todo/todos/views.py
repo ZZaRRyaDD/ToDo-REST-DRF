@@ -1,5 +1,6 @@
 from django.db.models import Q
 from rest_framework import generics, permissions
+from wall.permissions import IsCreator
 
 from . import serializers, models
 
@@ -15,8 +16,8 @@ class TaskCreateView(generics.CreateAPIView):
 
 class TaskRetrieveDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """Обновление / удаление / просмотр задачи"""
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = serializers.TaskDetailSerializer
+    permission_classes = [permissions.IsAuthenticated, IsCreator]
+    serializer_class = serializers.TaskCreateSerializer
     queryset = models.Task.objects.all()
 
 
