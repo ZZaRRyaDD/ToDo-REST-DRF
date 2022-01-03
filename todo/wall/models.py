@@ -6,6 +6,7 @@ class Post(models.Model):
     date_time = models.DateTimeField(auto_now=True, verbose_name="Дата создания поста")
     task = models.ForeignKey('todos.Task', on_delete=models.CASCADE, verbose_name="Задача", related_name="task")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор", related_name="posts")
+    text = models.TextField(verbose_name="Текст к посту", default='')
 
     def __str__(self):
         return f"id: {self.id}, составитель: {self.user.username}, задача: {self.task.name}"

@@ -59,19 +59,19 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
-    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
-    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
-    "SEND_ACTIVATION_EMAIL": True,
-    "SEND_CONFIRMATION_EMAIL": True,
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    "PASSWORD_RESET_CONFIRM_URL": "api/v1/reset/password/confirm/{uid}/{token}",
-    "ACTIVATION_URL": "api/v1/activate/{uid}/{token}",
+    # "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
+    # "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    # "SEND_ACTIVATION_EMAIL": True,
+    # "SEND_CONFIRMATION_EMAIL": True,
+    # 'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    # "PASSWORD_RESET_CONFIRM_URL": "api/v1/reset/password/confirm/{uid}/{token}",
+    # "ACTIVATION_URL": "api/v1/activate/{uid}/{token}",
     "SERIALIZERS": {
         "user_create": "account.serializers.UserCreateSerializer",  # custom serializer
         "user": "account.serializers.UserSerializer",
         "current_user": "account.serializers.UserSerializer",
         "user_delete": "account.serializers.UserSerializer",
-    },
+    }
 }
 
 SIMPLE_JWT = {

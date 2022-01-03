@@ -1,4 +1,5 @@
 from account.serializers import UserSerializer
+from todos.serializers import TaskDetailSerializer
 from rest_framework import serializers
 
 from . import models
@@ -16,19 +17,20 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comment
         fields = ["id", "date_time", "user", "post", "text"]
-        read_only_fields = ["user", ]
+        read_only_fields = ["user", "id"]
 
 
 class CreatePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Post
-        fields = ["task", ]
+        fields = ["task", "text"]
 
 
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    task = TaskDetailSerializer()
 
     class Meta:
         model = models.Post
-        fields = ["id", "date_time", "task", "user"]
-        read_only_fields = ["user", ]
+        fields = ["user", "id", "date_time", "task", "user", "text"]
+        read_only_fields = ["user", "id"]

@@ -17,7 +17,7 @@ class AllListPostsView(generics.ListAPIView):
     """Список всех постов"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.PostSerializer
-    queryset = models.Post.objects.order_by('date_time')
+    queryset = models.Post.objects.order_by('-date_time')
 
 
 class ReadPostView(generics.RetrieveAPIView):
@@ -49,7 +49,7 @@ class CommentListView(generics.ListAPIView):
     serializer_class = serializers.CommentSerializer
 
     def get_queryset(self):
-        return models.Comment.objects.filter(post__id=self.kwargs['pk'])
+        return models.Comment.objects.filter(post__id=self.kwargs['pk']).order_by('date_time')
 
 
 class ReadDeleteUpdateCommentView(generics.RetrieveUpdateDestroyAPIView):
