@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
     'wall.apps.WallConfig',
@@ -59,6 +60,8 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
+    "SET_PASSWORD_RETYPE": True,
+    "SET_USERNAME_RETYPE": True,
     # "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
     # "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
     # "SEND_ACTIVATION_EMAIL": True,
@@ -79,6 +82,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
@@ -100,6 +104,7 @@ CORS_ALLOW_METHODS = [
     "PUT",
     "DELETE",
     "POST",
+    "PATCH"
 ]
 
 MIDDLEWARE = [
