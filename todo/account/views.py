@@ -82,6 +82,4 @@ class InfoOtherUserView(generics.RetrieveAPIView):
     """Просмотр информации о другом юзере"""
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = serializers.UserSerializer
-
-    def get_queryset(self):
-        return User.objects.get(id=self.kwargs['pk'])
+    queryset = User.objects.all()
