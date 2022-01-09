@@ -58,17 +58,18 @@ REST_FRAMEWORK = {
     ],
 }
 
+DOMAIN = 'localhost:8080'
+SITE_NAME = 'TODO REST'
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
     "SET_PASSWORD_RETYPE": True,
     "SET_USERNAME_RETYPE": True,
-    # "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
-    # "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
-    # "SEND_ACTIVATION_EMAIL": True,
-    # "SEND_CONFIRMATION_EMAIL": True,
-    # 'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    # "PASSWORD_RESET_CONFIRM_URL": "api/v1/reset/password/confirm/{uid}/{token}",
-    # "ACTIVATION_URL": "api/v1/activate/{uid}/{token}",
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    "SEND_ACTIVATION_EMAIL": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    "PASSWORD_RESET_CONFIRM_URL": "reset/password/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "activate/{uid}/{token}",
     "SERIALIZERS": {
         "user_create": "account.serializers.UserCreateSerializer",  # custom serializer
         "user": "account.serializers.UserSerializer",

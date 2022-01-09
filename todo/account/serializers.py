@@ -12,8 +12,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 email=validated_data["email"],
                 username=validated_data['username'],
                 password=validated_data['password'],
-                first_name=validated_data['first_name'],
-                last_name=validated_data['last_name']
             )
             user.is_active = False
             user.save()
@@ -21,7 +19,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'password', 'first_name', 'last_name')
+        fields = ('id', 'email', 'username', 'password')
 
 
 class ResetPasswordSerializer(serializers.Serializer):
