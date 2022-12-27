@@ -12,28 +12,8 @@ services:
       dockerfile: ./nginx/Dockerfile
     depends_on:
       - django
-      - daphne
     ports:
       - 80:80
-
-  daphne:
-    build:
-      context: .
-      dockerfile: ./server/Dockerfile
-      args:
-        MODE: "--without dev"
-    depends_on:
-      - postgres
-      - redis
-    environment:
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-      - REDIS_URL=${REDIS_URL}
-      - DJANGO_DEBUG=${DJANGO_DEBUG}
-      - DJANGO_EMAIL_HOST_USER=${DJANGO_EMAIL_HOST_USER}
-      - DJANGO_EMAIL_HOST_PASSWORD=${DJANGO_EMAIL_HOST_PASSWORD}
-    expose:
-      - 8080
-    command: daphne -b 0.0.0.0 -p 8080 config.asgi:application
 
   django:
     build:

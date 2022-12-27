@@ -22,7 +22,7 @@ class PostViewSet(BaseViewSet):
         return models.Post.objects.select_related(
             "task",
             "user",
-        ).order_by('-date_time')
+        ).order_by('-created_at')
 
     def get_serializer_class(self):
         if self.action == "comments":

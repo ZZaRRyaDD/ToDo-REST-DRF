@@ -16,6 +16,6 @@ class TaskSerializer(BaseModelSerializer):
             "id",
             "name",
             "description",
-            "done",
+            "is_done",
             "user",
         )

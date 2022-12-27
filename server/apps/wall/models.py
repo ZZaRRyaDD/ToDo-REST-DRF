@@ -5,7 +5,7 @@ from django.db import models
 class Post(models.Model):
     """Model of Post."""
 
-    date_time = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата создания поста",
     )
@@ -37,7 +37,7 @@ class Post(models.Model):
 class Comment(models.Model):
     """Model of Comment."""
 
-    date_time = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата создания поста",
     )

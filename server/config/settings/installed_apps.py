@@ -14,7 +14,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
-    "django_filters",
     "django_extensions",
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',

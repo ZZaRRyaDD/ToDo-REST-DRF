@@ -19,7 +19,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = models.Comment
         fields = (
             "id",
-            "date_time",
+            "created_at",
             "user",
             "post",
             "text",
@@ -39,7 +39,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "user",
-            "date_time",
+            "created_at",
             "task",
             "user",
             "text",

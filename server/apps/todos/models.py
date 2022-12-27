@@ -14,7 +14,7 @@ class Task(models.Model):
         default="",
         verbose_name="Описание",
     )
-    done = models.BooleanField(
+    is_done = models.BooleanField(
         default=False,
         verbose_name="Завершено",
     )

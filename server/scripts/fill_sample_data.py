@@ -1,16 +1,15 @@
-from apps.chat.factories import MessageFactory
-from apps.events.factories import EventFactory, InviteFactory
-from apps.users.factories import UserFactory
+from apps.wall.factories import PostFactory, CommentFactory
+from apps.todos.factories import TaskFactory
+from apps.account.factories import UserFactory
 
-COUNT_EVENTS = COUNT_USERS = COUNT_MESSAGES = 10
+COUNT_USERS = 10
 
 
 def run():
     """Generate examples."""
-    events = EventFactory.create_batch(size=COUNT_EVENTS)
     users = UserFactory.create_batch(size=COUNT_USERS)
-    for event, user in zip(events, users):
-        for _ in range(COUNT_MESSAGES):
-            MessageFactory.create(event=event, user=user)
-        InviteFactory.create(event=event, user=user)
-        event.members.add(user)
+    for user in users:
+        task = TaskFactory.create(user=user)
+        post = PostFactory.create(user=user, task=task)
+        for commentator in users:
+            CommentFactory.create(user=commentator, post=post)
