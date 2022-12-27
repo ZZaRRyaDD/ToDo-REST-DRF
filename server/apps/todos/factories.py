@@ -1,10 +1,7 @@
-from datetime import datetime, timedelta
-
 import factory
-import pytz
 
-from apps.todos import models
 from apps.account.factories import UserFactory
+from apps.todos import models
 
 
 class TaskFactory(factory.django.DjangoModelFactory):

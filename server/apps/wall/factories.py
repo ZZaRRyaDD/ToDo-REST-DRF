@@ -1,8 +1,8 @@
 import factory
 
-from apps.wall import models
-from apps.todos.factories import TaskFactory
 from apps.account.factories import UserFactory
+from apps.todos.factories import TaskFactory
+from apps.wall import models
 
 
 class PostFactory(factory.django.DjangoModelFactory):

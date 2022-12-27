@@ -1,6 +1,6 @@
-from apps.wall.factories import PostFactory, CommentFactory
-from apps.todos.factories import TaskFactory
 from apps.account.factories import UserFactory
+from apps.todos.factories import TaskFactory
+from apps.wall.factories import CommentFactory, PostFactory
 
 COUNT_USERS = 10
 
