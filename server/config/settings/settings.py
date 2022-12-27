@@ -9,7 +9,7 @@ ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 # GENERAL
 # ------------------------------------------------------------------------------
-APP_LABEL = "EventMaker"
+APP_LABEL = "TODO REST"
 FRONTEND_URL = ""
 DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 SECRET_KEY = os.getenv(
@@ -18,14 +18,13 @@ SECRET_KEY = os.getenv(
 )
 ALLOWED_HOSTS = ["*"]
 TIME_ZONE = "Asia/Krasnoyarsk"
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
-ASGI_APPLICATION = 'config.routing.application'
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -40,15 +39,6 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "IGNORE_EXCEPTIONS": True,
-        },
-    }
-}
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('redis', 6379)],
         },
     },
 }

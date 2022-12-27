@@ -75,23 +75,6 @@ services:
     expose:
       - 6379
 
-  celery:
-    container_name: celery
-    restart: always
-    build:
-      context: .
-      dockerfile: ./server/Dockerfile
-      args:
-        MODE: "--without dev"
-    depends_on:
-      - postgres
-      - redis
-    environment:
-      - REDIS_URL=${REDIS_URL}
-      - DJANGO_DEBUG=${DJANGO_DEBUG}
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-    command: celery --app config.celery:app worker --beat --scheduler=django --loglevel=info
-
   postgres-backup:
     image: rmiddle/pg_dump:latest
     container_name: postgres-backup

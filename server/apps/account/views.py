@@ -1,35 +1,33 @@
-from django.contrib.auth.models import User
-from rest_framework import generics, status, permissions
-from rest_framework.response import Response
-from todos.models import Task
-from todos.serializers import TaskDetailSerializer
-from wall.models import Post
-from wall.serializers import PostSerializer
+from rest_framework import generics, permissions
 
-from . import serializers
+from apps.core.services.pagination import PaginationObject
+from apps.todos.models import Task
+from apps.todos.serializers import TaskSerializer
+from apps.wall.models import Post
+from apps.wall.serializers import PostSerializer
 
 
 class PostsUserView(generics.ListAPIView):
-    """Просмотр постов пользователя"""
+    """View for get posts of user."""
 
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated, )
     serializer_class = PostSerializer
+    pagination_class = PaginationObject
 
     def get_queryset(self):
-        return Post.objects.filter(user__id=self.kwargs['pk'])
+        return Post.objects.select_related("user").filter(
+            user__id=self.kwargs['pk'],
+        )
+
 
 class TasksUserView(generics.ListAPIView):
-    """Просмотр задач пользователя"""
+    """View for get tasks of user."""
 
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = TaskDetailSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = TaskSerializer
+    pagination_class = PaginationObject
 
     def get_queryset(self):
-        return Task.objects.filter(user__id=self.kwargs['pk'])
-
-class InfoOtherUserView(generics.RetrieveAPIView):
-    """Просмотр информации о другом юзере"""
-
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = serializers.UserSerializer
-    queryset = User.objects.all()
+        return Task.objects.select_related("user").filter(
+            user__id=self.kwargs['pk'],
+        )

@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class AccountConfig(AppConfig):
-    name = 'apps.account'
+    """Class-configuration of chat app."""
+
+    name = "apps.account"

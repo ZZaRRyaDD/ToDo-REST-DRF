@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class WallConfig(AppConfig):
-    name = 'apps.wall'
+    """Class-configuration of wall app."""
+
+    name = "apps.wall"

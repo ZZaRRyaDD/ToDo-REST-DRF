@@ -1,36 +1,60 @@
-from account.serializers import UserSerializer
-from todos.serializers import TaskDetailSerializer
 from rest_framework import serializers
+
+from apps.account.serializers import UserSerializer
+from apps.todos.models import Task
+from apps.todos.serializers import TaskSerializer
 
 from . import models
 
 
-class CommentCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Comment
-        fields = ("text", )
-
-
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    """Serializer for Comment model."""
+
+    user = UserSerializer(read_only=True)
+    post = serializers.PrimaryKeyRelatedField(
+        queryset=models.Post.objects.all(),
+    )
 
     class Meta:
         model = models.Comment
-        fields = ("id", "date_time", "user", "post", "text")
-        read_only_fields = ("user", "id")
-
-
-class CreatePostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Post
-        fields = ("task", "text")
+        fields = (
+            "id",
+            "date_time",
+            "user",
+            "post",
+            "text",
+        )
 
 
 class PostSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    task = TaskDetailSerializer()
+    """Serializer for Post model."""
+
+    user = UserSerializer(read_only=True)
+    task = serializers.PrimaryKeyRelatedField(
+        queryset=Task.objects.all(),
+    )
 
     class Meta:
         model = models.Post
-        fields = ("user", "id", "date_time", "task", "user", "text")
-        read_only_fields = ("user", "id")
+        fields = (
+            "id",
+            "user",
+            "date_time",
+            "task",
+            "user",
+            "text",
+        )
+
+    def validate(self, attrs):
+        if models.Post.objects.select_related(
+            "task",
+        ).filter(task=attrs["task"]).exists():
+            raise serializers.ValidationError(
+                "Пост с такой задачей уже существует",
+            )
+        return attrs
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.update({"task": TaskSerializer(instance.task).data})
+        return data

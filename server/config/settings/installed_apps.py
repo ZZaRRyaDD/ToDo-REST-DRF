@@ -4,29 +4,28 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
     "django.contrib.admin",
     "django.forms",
 ]
 
 THIRD_PARTY_APPS = [
-    "daphne",
-    "django.contrib.staticfiles",
-    "django_celery_beat",
+    "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
-    "corsheaders",
     "drf_spectacular",
     "django_filters",
     "django_extensions",
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'djoser',
 ]
 
 LOCAL_APPS = [
-    "apps.chat.apps.ChatConfig",
+    'apps.account.apps.AccountConfig',
     "apps.core.apps.CoreConfig",
-    "apps.events.apps.EventsConfig",
-    "apps.users.apps.UsersConfig",
+    'apps.wall.apps.WallConfig',
+    'apps.todos.apps.TodosConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
